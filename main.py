@@ -77,7 +77,9 @@ def main():
         #put detect in here.
         #ex.
 
-        print(frontView.test())
+        print("hwidth_fwidth:", frontView.hwidth_fwidth())
+        print("parallel:", frontView.parallel())
+
 
         ###
 
