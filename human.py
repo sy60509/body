@@ -33,5 +33,9 @@ class Human:
         self.LA = keypoints[0][14]
 
     def test(self):
-        return self.LS;
-
+        return self.LS
+    
+    def getTArch(self):
+        return {'RS':self.RS, 'LS':self.LS, 'Neck':self.Neck, 'MH':self.MH}
+    
+    
