@@ -76,3 +76,18 @@ class Human:
         else:
             return 0
 
+    def shoulder_foot_distance(self):
+        
+        sxx=math.pow((self.RS[0]-self.LS[0]), 2)
+        syy=math.pow((self.RS[1]-self.LS[1]), 2)
+        s_dis=cmath.sqrt(sxx+syy)
+
+        axx=math.pow((self.RA[0]-self.LA[0]), 2)
+        ayy=math.pow((self.RA[1]-self.LA[1]), 2)
+        a_dis=cmath.sqrt(axx+ayy)
+
+        if a_dis>=s_dis:
+            return 1
+        else:
+            return 0
+
