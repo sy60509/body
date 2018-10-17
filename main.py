@@ -1,6 +1,7 @@
 import os
 import sys
 import cv2
+import math
 import human
 from sys import platform
 import multiprocessing as mp
@@ -67,23 +68,20 @@ def main():
         
         if len(frontPoints)<=0 or len(sidePoints)<=0:
             print('No Human Detect!')
-            continue;
+            continue
         
         frontView = human.Human(frontPoints)
         sideView = human.Human(sidePoints)
 
-        ###
-        #
-        #put detect in here.
-        #ex.
+        
+        try:
+            #print("hwidth_fwidth:", frontView.measureWristsAndAnkles())
+            print("parallel:", frontView.measureShouldersAndAnleesParallel())
+            #print("shoulder_foot_distance:", frontView.measureShouldersAndAnkles())
+        except ZeroDivisionError as e:
+            print("ZeroDivisionError:", e)
+            continue
 
-        print("hwidth_fwidth:", frontView.hwidth_fwidth())
-        print("parallel:", frontView.parallel())
-
-
-        ###
-
-    
     #Release Camera
     frontCam.release()
     sideCam.release()

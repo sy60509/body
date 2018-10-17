@@ -1,3 +1,5 @@
+import math
+
 class Human:
     def __init__(self, keypoints):
         #{0,  "Nose"},
@@ -32,15 +34,10 @@ class Human:
         self.LA = keypoints[0][14]
 
         
-
-    def test(self):
-        return self.LS
-    
     def getTArch(self):
         return {'RS':self.RS, 'LS':self.LS, 'Neck':self.Neck, 'MH':self.MH}
-		
-		
-    def hwidth_fwidth(self):
+				
+    def measureWristsAndAnkles(self):
         hwidth = abs(self.RW[0]-self.LW[0])
         fwidth = abs(self.RA[0]-self.LA[0])
         if hwidth > fwidth:
@@ -48,7 +45,7 @@ class Human:
         else:
             return 0
 			
-    def parallel(self):
+    def measureShouldersAndAnleesParallel(self):
 		
 	#陣列(肩膀)
         c1=self.RS
@@ -76,15 +73,15 @@ class Human:
         else:
             return 0
 
-    def shoulder_foot_distance(self):
+    def measureShouldersAndAnkles(self):
         
         sxx=math.pow((self.RS[0]-self.LS[0]), 2)
         syy=math.pow((self.RS[1]-self.LS[1]), 2)
-        s_dis=cmath.sqrt(sxx+syy)
+        s_dis=math.sqrt(sxx+syy)
 
         axx=math.pow((self.RA[0]-self.LA[0]), 2)
         ayy=math.pow((self.RA[1]-self.LA[1]), 2)
-        a_dis=cmath.sqrt(axx+ayy)
+        a_dis=math.sqrt(axx+ayy)
 
         if a_dis>=s_dis:
             return 1
