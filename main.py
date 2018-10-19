@@ -2,9 +2,10 @@ import os
 import sys
 import cv2
 import math
+import time
 import human
+import camera
 from sys import platform
-import multiprocessing as mp
 
 dit_path = os.path.dirname(os.path.realpath(__file__))
 sys.path.append('/home/supergan/Codelab/openpose/python')
@@ -31,22 +32,13 @@ def set_params():
     params["default_model_folder"] = dir_path + "/../../../models/"
     return params
 
-def initCamera(id):    
-    cam = cv2.VideoCapture(id)
-    print("cam", id, ":", cam)
-
-    # Set Image's Pixel, 240p=352x240, 360p=640x360, 480p=640x480, 720p=1280x720
-    cam.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-    cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
-    return cam
-
 def main():
     params = set_params()
     openpose = OpenPose(params)
     
     #Chose Camera, 0=front, 1=side camera
-    frontCam = initCamera(0)
-    sideCam = initCamera(1)
+    frontCam = camera.WebcamVideoStream(0).start()
+    sideCam = camera.WebcamVideoStream(1).start()
     
     while 1:
         
@@ -55,8 +47,8 @@ def main():
             break
         
         #Image Shot from Camera, ret=True or False(Success or Fail), img=sigle frame
-        ret0, img_0 = frontCam.read()
-        ret1, img_1 = sideCam.read()
+        img_0 = frontCam.read()
+        img_1 = sideCam.read()
         
         #Input Image into OpenPose, Output Keypoints and Keypoint Image
         frontPoints, frontImage = openpose.forward(img_0, True)
@@ -75,16 +67,17 @@ def main():
 
         
         try:
-            #print("hwidth_fwidth:", frontView.measureWristsAndAnkles())
-            print("parallel:", frontView.measureShouldersAndAnleesParallel())
-            #print("shoulder_foot_distance:", frontView.measureShouldersAndAnkles())
+            print("1 m_WristsAndAnkles:", frontView.measureWristsAndAnkles())
+            print("2 m_Shoulders And Anless Parallel:", frontView.measureShouldersAndAnleesParallel())
+            print("3 m_Shoulder And Ankles:", frontView.measureShouldersAndAnkles())
+            print('\n')
         except ZeroDivisionError as e:
             print("ZeroDivisionError:", e)
             continue
 
     #Release Camera
-    frontCam.release()
-    sideCam.release()
+    frontCam.stop()
+    sideCam.stop()
     
     #Close All OpenCV Windows
     cv2.destroyAllWindows()

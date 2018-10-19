@@ -55,7 +55,7 @@ class Human:
         #進行陣列內第0跟1位置的計算
         results= float(ans[1])/float(ans[0])
 	#得出肩膀之斜率
-        print(results)
+        #print(results)
 	#印出肩膀結果
 
 	#陣列(雙腳)
@@ -66,9 +66,9 @@ class Human:
 	#進行陣列內第0跟1位置的計算
         results2= float(ans2[1])/float(ans2[0])
 	#得出雙腳之斜率
-        print(results2)
+        #print(results2)
 	#印出雙腳結果
-        if abs(results-results2)<0.2:
+        if abs(results-results2)<0.15:
             return 1
         else:
             return 0
